@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sorry Yashika 💌</title>
+<style>
+  body{margin:0;background:#000;color:#fff;font-family:Inter;display:flex;align-items:center;justify-content:center;height:100vh;}
+  .intro{position:fixed;inset:0;background:#fff;color:#111;font-family:Georgia;font-size:28px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:10;}
+  .stage{width:420px;max-width:95vw;height:820px;background:#0e0e12;border-radius:30px;position:relative;border:5px solid #000;overflow:hidden;}
+  .center{height:100%;display:flex;align-items:center;justify-content:center;position:relative;}
+  .tap-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:20px;font-weight:700;}
+  .env-wrap{width:260px;height:160px;position:relative;perspective:800px;}
+  .envelope{width:100%;height:100%;background:#ffd9f6;border-radius:12px;position:relative;transition:0.9s;box-shadow:0 10px 30px rgba(0,0,0,0.5);}
+  .flap{position:absolute;left:0;right:0;top:0;height:60%;background:#ffebf7;clip-path: polygon(0 0,50% 60%,100% 0,100% 100%,0 100%);border-radius:12px 12px 0 0;transition:0.7s;}
+  .paper{position:absolute;left:12px;right:12px;top:12px;bottom:12px;background:#fff;border-radius:8px;padding:20px;text-align:center;opacity:0;transform:translateY(30%);transition:0.7s;}
+  .env-open .flap{transform:rotateX(180deg) translateY(-10px);}
+  .env-open .paper{opacity:1;transform:translateY(-5%);}
+  .msg{font-family:Georgia;color:#111;font-size:20px;font-weight:700;}
+  .reveal{position:absolute;bottom:120px;width:90%;left:50%;transform:translateX(-50%);text-align:center;opacity:0;transition:0.6s;}
+  .reveal.show{opacity:1;}
+  .apology{font-family:Georgia;font-size:26px;font-weight:700;}
+  .sub{color:#ccc;margin-top:6px;font-size:15px;}
+  .controls{position:absolute;bottom:16px;width:100%;display:flex;justify-content:center;}
+  .btn{padding:10px 14px;border-radius:20px;background:#222;border:1px solid #555;color:#fff;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="intro" id="intro">SORRY YASHIKA 💌</div>
+
+<div class="stage" id="stage">
+  <div class="center">
+    <div class="tap-hint" id="hint">Tap to open 💗</div>
+    <div class="env-wrap">
+      <div class="envelope" id="env">
+        <div class="flap"></div>
+        <div class="paper"><div class="msg">I know I have hurted you… and I truly am sorry from my heart. 💗</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <div class="apology">I'M SORRY</div>
+    <div class="sub">I didn't mean to hurt you. Will you forgive me?</div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" id="replay">Replay</button>
+  </div>
+
+  <!-- Audio -->
+  <audio id="bgm" preload="auto" loop>
+    <source src="assets/song.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+const intro = document.getElementById('intro');
+const stage = document.getElementById('stage');
+const reveal = document.getElementById('reveal');
+const hint = document.getElementById('hint');
+const bgm = document.getElementById('bgm');
+
+function playSequence(){
+  intro.style.opacity = 0;
+  setTimeout(()=> intro.style.display = "none", 300);
+  stage.classList.add('env-open');
+  hint.style.opacity = 0;
+  setTimeout(()=> reveal.classList.add('show'), 700);
+  bgm.play().catch(()=>{});
+}
+
+window.addEventListener('click', ()=> playSequence(), {once:true});
+
+document.getElementById('replay').addEventListener('click', ()=>{
+  reveal.classList.remove('show');
+  stage.classList.remove('env-open');
+  hint.style.opacity = 1;
+  intro.style.display = "flex";
+  intro.style.opacity = 1;
+  window.addEventListener('click', ()=> playSequence(), {once:true});
+});
+</script>
+
+</body>
+</html>
